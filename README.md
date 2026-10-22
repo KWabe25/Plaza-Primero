@@ -6,13 +6,11 @@ Propuesta para **UINNOVA CONARE Reto 2**: empleo juvenil fuera de la GAM. Protot
 - **Instituciones** — panel del pacto territorial: demanda, brechas, semáforo público y pago por resultados.
 - **Empresa** — registrar puestos, firmar el compromiso, ver candidatos y confirmar la contratación.
 
-La versión actual está en la raíz (`index.html`, capturas PNG y `shot.py`). La versión anterior está en [`v1/`](v1/). Nombres y cifras son de ejemplo.
+El prototipo está en la raíz (`index.html`, capturas PNG y `shot.py`). Nombres y cifras son de ejemplo.
 
 ## Cómo abrirla
 
 Abra `index.html` en el navegador (doble clic o arrastre el archivo). No hace falta servidor ni instalación.
-
-La versión 1 se abre igual: `v1/index.html`.
 
 ## Cómo regenerar las capturas
 
@@ -23,4 +21,4 @@ pip install playwright
 python shot.py
 ```
 
-El script abre el `index.html` de su misma carpeta (en la versión actual, también `_resumen.html`) y guarda los PNG ahí. Para la versión 1, el mismo comando dentro de `v1/`.
+El script abre el `index.html` de su misma carpeta (también `_resumen.html`) y guarda los PNG ahí.
