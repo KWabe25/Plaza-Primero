@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plaza Primero · Prototipo v2</title>
+<style>
+:root{--az:#0077b6;--az2:#00a6d6;--azd:#023e5a;--vd:#2bb673;--vd2:#e8f8ef;--am:#f4b400;--rj:#e5484d;--tx:#14213d;--mu:#667085;--bg:#f5f8fb;--ln:#e6ebf1;--sh:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.07)}
+*{box-sizing:border-box}html,body{margin:0}body{font-family:Inter,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased}
+svg.i{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button{font-family:inherit;cursor:pointer;transition:transform .12s,box-shadow .2s,background .2s}button:active{transform:scale(.96)}
+.top{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:14px;padding:12px 28px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.3px}.logo .m{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--az),var(--vd));display:grid;place-items:center;color:#fff;font-size:20px}
+.demo{background:#fff4d6;color:#8a5a00;font-size:11px;font-weight:800;letter-spacing:.6px;padding:5px 10px;border-radius:99px;border:1px solid #f6dc8f}
+.seg{margin-left:auto;display:flex;background:#eef2f6;border-radius:12px;padding:4px;gap:2px}
+.seg button{border:0;background:none;padding:9px 16px;border-radius:9px;font-size:14px;font-weight:600;color:var(--mu);display:flex;gap:7px;align-items:center}
+.seg button.on{background:#fff;color:var(--az);box-shadow:var(--sh)}
+.view{display:none;padding:28px;max-width:1280px;margin:auto;animation:f .3s}.view.on{display:block}@keyframes f{from{opacity:0;transform:translateY(6px)}}
+.claim{display:flex;gap:10px;align-items:center;justify-content:center;margin:0 0 22px;flex-wrap:wrap}
+.chip{display:inline-flex;gap:7px;align-items:center;background:#fff;border:1px solid var(--ln);border-radius:99px;padding:7px 13px;font-size:13px;font-weight:600;box-shadow:var(--sh)}
+.chip b{width:22px;height:22px;border-radius:50%;background:var(--az);color:#fff;display:grid;place-items:center;font-size:12px}.arr{color:var(--mu)}
+/* usuario */
+.uwrap{display:grid;grid-template-columns:1fr 390px 1fr;gap:30px;align-items:center}
+.side h3{font-size:22px;margin:0 0 8px;letter-spacing:-.4px}.side p{color:var(--mu);line-height:1.5;margin:0 0 14px}
+.steps{display:flex;flex-direction:column;gap:6px}.steps button{border:1px solid var(--ln);background:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600;color:var(--tx);text-align:left}
+.steps button.on{border-color:var(--az);background:#eaf5fb;color:var(--az)}.steps button span{width:24px;height:24px;border-radius:50%;background:#eef2f6;display:grid;place-items:center;font-size:12px}.steps button.on span{background:var(--az);color:#fff}
+.phone{width:390px;height:780px;border-radius:52px;background:#0d1117;padding:12px;box-shadow:0 30px 60px rgba(2,62,90,.25)}
+.scr{position:relative;width:100%;height:100%;border-radius:42px;background:#fff;overflow:hidden;display:flex;flex-direction:column}
+.sb{height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 26px;font-size:13px;font-weight:700}.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:110px;height:30px;background:#0d1117;border-radius:20px}
+.ust{display:none;flex:1;flex-direction:column;padding:6px 22px 20px;animation:f .25s}.ust.on{display:flex}
+.hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.lis{border:0;background:#eaf5fb;color:var(--az);border-radius:99px;padding:9px 14px;font-weight:700;font-size:15px;display:flex;gap:7px;align-items:center}
+.back{border:0;background:#f2f4f7;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:20px;color:var(--tx)}
+.ust h1{font-size:30px;line-height:1.12;letter-spacing:-.6px;margin:6px 0 6px}.ust .sub{font-size:19px;color:var(--mu);margin:0 0 14px}
+.cta{margin-top:auto;border:0;width:100%;min-height:68px;border-radius:20px;background:var(--vd);color:#fff;font-size:23px;font-weight:800;display:flex;gap:12px;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(43,182,115,.35)}
+.cta.az{background:var(--az);box-shadow:0 8px 18px rgba(0,119,182,.3)}
+.hero{height:220px;border-radius:26px;background:linear-gradient(160deg,#00a6d6,#0077b6 55%,#2bb673);position:relative;overflow:hidden;margin:4px 0 18px;display:grid;place-items:center}
+.fld{display:flex;align-items:center;gap:14px;border:2px solid var(--ln);border-radius:20px;padding:14px 16px;margin:8px 0 16px;font-size:26px;font-weight:700;letter-spacing:1px}.fld .ic{width:50px;height:50px;border-radius:14px;background:#eaf5fb;color:var(--az);display:grid;place-items:center;font-size:26px}
+.lbl{font-size:21px;font-weight:800;display:flex;gap:8px;align-items:center}
+.job{display:flex;gap:14px;align-items:center;border:1px solid var(--ln);border-radius:22px;padding:14px;margin-bottom:12px;box-shadow:var(--sh);background:#fff;width:100%;text-align:left}
+.job .ic{width:62px;height:62px;border-radius:18px;display:grid;place-items:center;font-size:32px;color:#fff}.job b{font-size:21px;display:block}.job small{font-size:15px;color:var(--mu);display:flex;gap:5px;align-items:center;margin-top:3px}
+.pill{display:inline-flex;gap:5px;align-items:center;background:var(--vd2);color:#13804c;font-weight:800;font-size:14px;padding:5px 10px;border-radius:99px}
+.row{display:flex;gap:14px;align-items:center;padding:13px 0;border-bottom:1px solid var(--ln);font-size:19px}.row .ic{width:46px;height:46px;border-radius:14px;background:#eaf5fb;color:var(--az);display:grid;place-items:center;font-size:23px}.row small{display:block;color:var(--mu);font-size:14px}
+.ring{width:170px;height:170px;margin:4px auto 10px;position:relative}.ring div{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:40px;font-weight:800}.ring small{font-size:15px;color:var(--mu);display:block;font-weight:600}
+.dots{display:flex;gap:7px;justify-content:center;margin:6px 0 14px;flex-wrap:wrap}.dots i{width:24px;height:24px;border-radius:8px;background:var(--vd);display:grid;place-items:center;color:#fff;font-size:14px;font-style:normal}.dots i.n{background:#eef2f6}
+.cert{border-radius:22px;padding:18px;background:linear-gradient(135deg,#fff,#f0faf5);border:1.5px solid #bfe8d2;text-align:center;position:relative}.cert .seal{width:56px;height:56px;border-radius:50%;margin:0 auto 6px;background:var(--vd);color:#fff;display:grid;place-items:center;font-size:28px}
+.int{display:flex;gap:12px;align-items:center;background:#eaf5fb;border-radius:20px;padding:14px;margin:14px 0}.int .ic{width:54px;height:54px;border-radius:16px;background:var(--az);color:#fff;display:grid;place-items:center;font-size:27px}.int b{font-size:19px}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto}.yn button{border:0;border-radius:24px;min-height:150px;font-size:26px;font-weight:800;color:#fff;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center}.yn svg{font-size:52px}
+.chat{flex:1;background:#f5f8fb;border-radius:22px;padding:12px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+.bub{max-width:84%;background:#fff;border-radius:18px 18px 18px 6px;padding:10px 13px;font-size:17px;box-shadow:var(--sh);display:flex;gap:8px;align-items:center}.bub.me{align-self:flex-end;background:#dff3ea;border-radius:18px 18px 6px 18px}
+.wave{display:flex;gap:3px;align-items:center}.wave i{width:3px;border-radius:2px;background:#13804c}
+.mic{display:flex;gap:10px;margin-top:12px}.mic .m{flex:1;border:0;border-radius:22px;background:var(--rj);color:#fff;font-size:23px;font-weight:800;min-height:68px;display:flex;gap:10px;align-items:center;justify-content:center;animation:pu 1.8s infinite}
+@keyframes pu{0%,100%{box-shadow:0 0 0 0 rgba(229,72,77,.45)}50%{box-shadow:0 0 0 10px rgba(229,72,77,0)}}
+.wa{display:flex;gap:8px;align-items:center;justify-content:center;font-size:14px;color:#13804c;font-weight:700;margin-top:10px}
+.fab{position:absolute;right:18px;bottom:104px;width:60px;height:60px;border-radius:50%;border:0;background:var(--az);color:#fff;font-size:28px;display:grid;place-items:center;box-shadow:0 10px 20px rgba(0,119,182,.35)}
+/* dashboard */
+.dgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}.card{background:#fff;border:1px solid var(--ln);border-radius:20px;padding:20px;box-shadow:var(--sh)}
+.card h4{margin:0 0 4px;font-size:16px;display:flex;gap:8px;align-items:center}.card .d{color:var(--mu);font-size:13px;margin:0 0 14px}
+.kpi{grid-column:span 3}.kpi .v{font-size:32px;font-weight:800;letter-spacing:-1px;margin-top:4px}.kpi .t{font-size:13px;color:var(--mu);font-weight:600;display:flex;gap:7px;align-items:center}.kpi .s{font-size:12.5px;color:#13804c;font-weight:700;margin-top:4px}
+.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+.hb{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;font-size:13px;margin:10px 0}.hb .t{height:12px;border-radius:6px;background:#eef2f6;position:relative;overflow:hidden}.hb .t i{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.lg{display:flex;gap:14px;font-size:12px;color:var(--mu);margin-top:6px}.lg span{display:flex;gap:5px;align-items:center}.lg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th{text-align:left;color:var(--mu);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px;padding:9px 10px;border-bottom:1px solid var(--ln)}td{padding:12px 10px;border-bottom:1px solid var(--ln)}
+.st{display:inline-flex;gap:6px;align-items:center;font-weight:700;font-size:12.5px;padding:4px 10px;border-radius:99px}.st.g{background:#e6f7ee;color:#13804c}.st.y{background:#fff5d6;color:#946200}.st.r{background:#fdeaea;color:#b4232a}.st i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.mini{height:7px;background:#eef2f6;border-radius:4px;width:90px;display:inline-block;vertical-align:middle;margin-right:8px;overflow:hidden}.mini i{display:block;height:100%;border-radius:4px}
+.ver{display:flex;gap:10px;align-items:center;background:#eaf5fb;border-radius:14px;padding:10px 14px;font-size:13px;color:var(--azd);margin-bottom:14px;flex-wrap:wrap}
+.flow{display:flex;gap:10px;align-items:stretch}.flow div{flex:1;background:#f5f8fb;border-radius:14px;padding:12px;font-size:13px}.flow b{display:block;font-size:20px;color:var(--az)}
+.esc div{display:flex;gap:10px;align-items:flex-start;padding:9px 0;font-size:13.5px;border-bottom:1px dashed var(--ln)}.esc div:last-child{border:0}
+.tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:#eef2f6;color:var(--mu)}
+.dnav{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}.dnav a{text-decoration:none;color:var(--mu);font-weight:600;font-size:13px;background:#fff;border:1px solid var(--ln);padding:7px 12px;border-radius:99px}
+/* empresa */
+.ewrap{display:grid;grid-template-columns:240px 1fr;gap:22px}.enav{display:flex;flex-direction:column;gap:6px}.enav button{border:0;background:none;text-align:left;padding:12px 14px;border-radius:12px;font-size:14.5px;font-weight:600;color:var(--mu);display:flex;gap:10px;align-items:center}.enav button.on{background:#fff;color:var(--az);box-shadow:var(--sh)}
+.est{display:none;animation:f .25s}.est.on{display:block}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:16px}.form label{font-size:13px;font-weight:600;color:var(--mu);display:block;margin-bottom:6px}.inp{border:1px solid #d6dde6;border-radius:12px;padding:12px 14px;font-size:15px;background:#fff;display:flex;justify-content:space-between;align-items:center}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:700;font-size:14.5px;background:var(--az);color:#fff;display:inline-flex;gap:8px;align-items:center}.btn.g{background:var(--vd)}.btn.o{background:#fff;color:var(--tx);border:1px solid var(--ln)}
+.cand{display:grid;grid-template-columns:48px 1fr auto auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--ln)}.av{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800}
+.sig{border:2px dashed #cfd8e3;border-radius:14px;height:90px;display:grid;place-items:center;color:var(--mu);font-family:"Brush Script MT","Segoe Script",cursive;font-size:30px}
+.ok{display:flex;gap:16px;align-items:center;background:var(--vd2);border-radius:18px;padding:18px}.ok .c{width:56px;height:56px;border-radius:50%;background:var(--vd);color:#fff;display:grid;place-items:center;font-size:28px}
+.foot{text-align:center;color:var(--mu);font-size:12px;padding:20px}
+@media(max-width:1000px){.uwrap{grid-template-columns:1fr}.side{display:none}.phone{margin:auto;max-width:100%}.dgrid>*{grid-column:span 12!important}.ewrap{grid-template-columns:1fr}.enav{flex-direction:row;overflow:auto}.form{grid-template-columns:1fr}.top{padding:10px 14px}.seg{margin-left:0;width:100%}.seg button{flex:1;justify-content:center;padding:9px 6px;font-size:13px}.view{padding:16px}}
+</style></head><body>
+<div class="top"><div class="logo"><div class="m"><svg class="i"><use href="#i-hand"/></svg></div>Plaza Primero</div><span class="demo">DATOS DE EJEMPLO</span><span style="color:var(--mu);font-size:13px">Pacto territorial · Limón y Siquirres</span>
+<div class="seg"><button class="on" onclick="P(0)"><svg class="i"><use href="#i-user"/></svg>Usuario</button><button onclick="P(1)"><svg class="i"><use href="#i-chart"/></svg>Instituciones</button><button onclick="P(2)"><svg class="i"><use href="#i-build"/></svg>Empresa</button></div></div>
+
+<!-- ========== USUARIO ========== -->
+<section class="view on" id="v0">
+<div class="claim"><span class="chip"><b>1</b>Primero existe el trabajo</span><span class="arr">→</span><span class="chip"><b>2</b>Después se abre el curso</span><span class="arr">→</span><span class="chip"><b>3</b>Se mide si sigue trabajando</span></div>
+<div class="uwrap">
+<div class="side"><h3>Hecho para todas las personas</h3><p>Palabras cortas, un ícono en cada opción, una sola acción por pantalla y botón para escuchar. Funciona con señal débil y también por WhatsApp.</p>
+<div class="steps" id="usteps"></div></div>
+<div class="phone" id="phone"><div class="scr"><div class="notch"></div><div class="sb"><span>9:41</span><span style="display:flex;gap:5px;align-items:center"><svg class="i"><use href="#i-sig"/></svg>3G</span></div>
+
+<div class="ust on"><div class="hd"><span></span><button class="lis" onclick="say(this)"><svg class="i"><use href="#i-vol"/></svg>Escuchar</button></div>
+<div class="hero"><svg viewBox="0 0 300 220" width="100%" height="100%"><circle cx="240" cy="40" r="26" fill="#ffd66b"/><path d="M0 170 Q75 140 150 165 T300 160 V220 H0Z" fill="#ffffff33"/><path d="M0 190 Q90 165 170 188 T300 182 V220 H0Z" fill="#ffffff55"/><rect x="40" y="96" width="70" height="44" rx="5" fill="#ff8a3d"/><rect x="112" y="96" width="70" height="44" rx="5" fill="#ffd66b"/><rect x="76" y="54" width="70" height="40" rx="5" fill="#2bb673"/><circle cx="222" cy="112" r="16" fill="#fff"/><rect x="204" y="130" width="36" height="46" rx="14" fill="#fff"/></svg></div>
+<h1>Hola.<br>Primero el trabajo, luego el curso.</h1><p class="sub">Estudie gratis con beca y salga con entrevista segura.</p>
+<button class="cta" onclick="U(1)">Empezar<svg class="i"><use href="#i-arr"/></svg></button></div>
+
+<div class="ust"><div class="hd"><button class="back" onclick="U(0)"><svg class="i"><use href="#i-back"/></svg></button><button class="lis" onclick="say(this)"><svg class="i"><use href="#i-vol"/></svg>Escuchar</button></div>
+<h1>¿Quién es usted?</h1><p class="sub">Solo 2 datos.</p>
+<div class="lbl"><svg class="i"><use href="#i-id"/></svg>Cédula</div><div class="fld"><div class="ic"><svg class="i"><use href="#i-id"/></svg></div>7 0123 0456</div>
+<div class="lbl"><svg class="i"><use href="#i-phone"/></svg>Teléfono</div><div class="fld"><div class="ic"><svg class="i"><use href="#i-phone"/></svg></div>8888 1234</div>
+<button class="cta" onclick="U(2)"><svg class="i"><use href="#i-check"/></svg>Listo</button></div>
+
+<div class="ust"><div class="hd"><button class="back" onclick="U(1)"><svg class="i"><use href="#i-back"/></svg></button><button class="lis" onclick="say(this)"><svg class="i"><use href="#i-vol"/></svg>Escuchar</button></div>
+<h1>Trabajos seguros cerca de usted</h1><p class="sub" style="display:flex;gap:6px;align-items:center"><svg class="i"><use href="#i-pin"/></svg>Limón centro</p>
+<button class="job" onclick="U(3)"><div class="ic" style="background:var(--az)"><svg class="i"><use href="#i-ship"/></svg></div><div><b>Puerto</b><small><svg class="i"><use href="#i-pin"/></svg>3 km</small><span class="pill" style="margin-top:6px"><svg class="i"><use href="#i-check"/></svg>27 trabajos</span></div></button>
+<button class="job" onclick="U(3)"><div class="ic" style="background:#f59e0b"><svg class="i"><use href="#i-bolt"/></svg></div><div><b>Electricidad</b><small><svg class="i"><use href="#i-pin"/></svg>Siquirres · 24 km</small><span class="pill" style="margin-top:6px"><svg class="i"><use href="#i-check"/></svg>18 trabajos</span></div></button>
+<button class="job" onclick="U(3)"><div class="ic" style="background:var(--vd)"><svg class="i"><use href="#i-chat"/></svg></div><div><b>Inglés y turismo</b><small><svg class="i"><use href="#i-pin"/></svg>Cahuita · 40 km</small><span class="pill" style="margin-top:6px"><svg class="i"><use href="#i-check"/></svg>14 trabajos</span></div></button>
+<button class="fab" onclick="U(7)"><svg class="i"><use href="#i-mic"/></svg></button></div>
+
+<div class="ust"><div class="hd"><button class="back" onclick="U(2)"><svg class="i"><use href="#i-back"/></svg></button><button class="lis" onclick="say(this)"><svg class="i"><use href="#i-vol"/></svg>Escuchar</button></div>
+<div style="display:flex;gap:12px;align-items:center"><div style="width:58px;height:58px;border-radius:18px;background:var(--az);color:#fff;display:grid;place-items:center;font-size:30px"><svg class="i"><use href="#i-ship"/></svg></div><h1 style="margin:0">Curso de puerto</h1></div>
+<div class="row"><div class="ic"><svg class="i"><use href="#i-build"/></svg></div><div>Lo contrata<small>Logística Caribe Sur</small></div></div>
+<div class="row"><div class="ic" style="background:var(--vd2);color:#13804c"><svg class="i"><use href="#i-coin"/></svg></div><div>Beca Empléate<small>Le pagan mientras estudia</small></div></div>
+<div class="row"><div class="ic"><svg class="i"><use href="#i-clock"/></svg></div><div>Lun a jue · 8 a 12<small>4 meses · INA Limón</small></div></div>
+<div class="row" style="border:0"><div class="ic"><svg class="i"><use href="#i-users"/></svg></div><div>Quedan 3 espacios<small>de 30</small></div></div>
+<button class="cta" onclick="U(4)"><svg class="i"><use href="#i-check"/></svg>Quiero entrar</button></div>
+
+<div class="ust"><div class="hd"><button class="back" onclick="U(3)"><svg class="i"><use href="#i-back"/></svg></button><button class="lis" onclick="say(this)"><svg class="i"><use href="#i-vol"/></svg>Escuchar</button></div>
+<h1>Mi progreso</h1><p class="sub">Curso de puerto</p>
+<div class="ring"><svg viewBox="0 0 100 100" width="170" height="170"><circle cx="50" cy="50" r="42" stroke="#eef2f6" stroke-width="10" fill="none"/><circle cx="50" cy="50" r="42" stroke="#2bb673" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="26" transform="rotate(-90 50 50)"/></svg><div><span>9 / 10<small>clases</small></span></div></div>
+<div class="dots"><i>✓</i><i>✓</i><i>✓</i><i>✓</i><i>✓</i><i>✓</i><i>✓</i><i>✓</i><i>✓</i><i class="n"></i></div>
+<div class="row" style="border:0"><div class="ic"><svg class="i"><use href="#i-cal"/></svg></div><div>Última clase<small>Jueves 8 am</small></div></div>
+<button class="cta" onclick="U(5)"><svg class="i"><use href="#i-flag"/></svg>Terminar</button></div>
+
+<div class="ust"><div class="hd"><span></span><button class="lis" onclick="say(this)"><svg class="i"><use href="#i-vol"/></svg>Escuchar</button></div>
+<h1>¡Lo logró!</h1>
+<div class="cert"><div class="seal"><svg class="i"><use href="#i-award"/></svg></div><div style="font-size:12px;letter-spacing:2px;color:var(--mu);font-weight:700">CERTIFICADO · INA</div><div style="font-size:21px;font-weight:800;margin:4px 0">Daniela M.</div><div style="font-size:15px">Logística portuaria</div><div style="font-size:12px;color:var(--mu);margin-top:6px">Listo al instante · 20/10/2026 · ejemplo</div></div>
+<div class="int"><div class="ic"><svg class="i"><use href="#i-brief"/></svg></div><div><b>Entrevista segura</b><div style="font-size:15px">Logística Caribe Sur</div><div style="font-size:15px;color:var(--az);font-weight:700">Lunes · 9 am</div></div></div>
+<button class="cta az" onclick="U(6)"><svg class="i"><use href="#i-down"/></svg>Guardar</button></div>
+
+<div class="ust"><div class="hd"><span class="pill"><svg class="i"><use href="#i-cal"/></svg>6 meses</span><button class="lis" onclick="say(this)"><svg class="i"><use href="#i-vol"/></svg>Escuchar</button></div>
+<h1>¿Sigue trabajando?</h1><p class="sub">En Logística Caribe Sur</p>
+<div style="background:#f5f8fb;border-radius:18px;padding:14px;font-size:15px;color:var(--mu);display:flex;gap:10px;align-items:center"><svg class="i" style="font-size:22px;color:var(--az)"><use href="#i-shield"/></svg>Su respuesta es privada. Se confirma con la planilla de la CCSS.</div>
+<div class="yn"><button style="background:var(--vd)" onclick="U(0)"><svg class="i"><use href="#i-check"/></svg>Sí</button><button style="background:#98a2b3" onclick="U(7)"><svg class="i"><use href="#i-x"/></svg>No</button></div></div>
+
+<div class="ust"><div class="hd"><button class="back" onclick="U(2)"><svg class="i"><use href="#i-back"/></svg></button><button class="lis" onclick="say(this)"><svg class="i"><use href="#i-vol"/></svg>Escuchar</button></div>
+<h1 style="font-size:28px">Ayuda</h1>
+<div class="chat"><div class="bub"><svg class="i" style="color:var(--az)"><use href="#i-bot"/></svg>Hola. ¿En qué le ayudo?</div>
+<div class="bub me"><svg class="i" style="color:#13804c"><use href="#i-play"/></svg><span class="wave" id="wv"></span><span style="font-size:13px">0:04</span></div>
+<div style="align-self:flex-end;font-size:12px;color:var(--mu);margin-top:-4px">“¿Cuándo es la entrevista?”</div>
+<div class="bub"><svg class="i" style="color:var(--az)"><use href="#i-bot"/></svg>El lunes a las 9 am.<svg class="i" style="color:var(--az)"><use href="#i-vol"/></svg></div></div>
+<div class="mic"><button class="m"><svg class="i"><use href="#i-mic"/></svg>Hablar</button></div>
+<div class="wa"><svg class="i"><use href="#i-wa"/></svg>También por WhatsApp: 8000-PLAZA</div></div>
+</div></div>
+<div class="side"><h3>Qué ve el jurado</h3><p>La persona no compra un curso: elige un <b>trabajo seguro</b>. Al terminar recibe certificado al instante y entrevista asegurada. A los 6 y 12 meses se confirma si sigue trabajando.</p>
+<div class="chip" style="margin-bottom:8px"><svg class="i" style="color:var(--vd)"><use href="#i-vol"/></svg>Lee todo en voz alta</div><br><div class="chip" style="margin-bottom:8px"><svg class="i" style="color:var(--rj)"><use href="#i-mic"/></svg>Habla en vez de escribir</div><br><div class="chip"><svg class="i" style="color:#13804c"><use href="#i-wa"/></svg>Funciona por WhatsApp</div></div>
+</div></section>
+
+<!-- ========== INSTITUCIONES ========== -->
+<section class="view" id="v1">
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;flex-wrap:wrap;gap:10px"><div><h2 style="margin:0;font-size:26px;letter-spacing:-.6px">Panel del pacto territorial</h2><div style="color:var(--mu);font-size:14px;margin-top:4px">Municipalidad · INA · MTSS · Universidad verificadora — Región Huetar Caribe</div></div><span class="tag">Actualizado: 1 oct 2026 · mensual</span></div>
+<div class="dnav"><a href="#d1">Mercado</a><a href="#d2">Brechas</a><a href="#d3">Semáforo</a><a href="#d4">Pago por resultados</a></div>
+<div class="dgrid" id="d1">
+<div class="card kpi"><div class="t"><svg class="i"><use href="#i-brief"/></svg>Trabajos comprometidos</div><div class="v">142</div><div class="s">+38 este trimestre</div></div>
+<div class="card kpi"><div class="t"><svg class="i"><use href="#i-book"/></svg>Cursos abiertos</div><div class="v">7</div><div class="s">solo con trabajo firmado</div></div>
+<div class="card kpi"><div class="t"><svg class="i"><use href="#i-users"/></svg>Usuarios contratados</div><div class="v">96 <span style="font-size:16px;color:var(--mu)">/ 118</span></div><div class="s">81% de egresados</div></div>
+<div class="card kpi"><div class="t"><svg class="i"><use href="#i-shield"/></svg>Siguen a 12 meses</div><div class="v">78%</div><div class="s">verificado planilla CCSS</div></div>
+<div class="card s7"><h4><svg class="i" style="color:var(--az)"><use href="#i-pin"/></svg>Demanda por cantón</h4><p class="d">Trabajos que las empresas se comprometen a contratar (mapa estilizado, no a escala)</p>
+<svg viewBox="0 0 640 300" width="100%">
+<path d="M70 40 L210 30 L230 120 L120 150 L60 120Z" fill="#cdeaf6" stroke="#fff" stroke-width="3"/><path d="M210 30 L330 34 L340 110 L230 120Z" fill="#9fd6ee" stroke="#fff" stroke-width="3"/><path d="M330 34 L450 50 L430 140 L340 110Z" fill="#4fb3e0" stroke="#fff" stroke-width="3"/><path d="M450 50 L560 90 L590 170 L470 190 L430 140Z" fill="#0077b6" stroke="#fff" stroke-width="3"/><path d="M230 120 L340 110 L430 140 L470 190 L360 220 L250 200 L210 160Z" fill="#00a6d6" stroke="#fff" stroke-width="3"/><path d="M360 220 L470 190 L590 170 L610 260 L480 285 L380 270Z" fill="#9fd6ee" stroke="#fff" stroke-width="3"/>
+<path d="M560 90 Q610 120 600 170" stroke="#7cc7e8" stroke-width="6" fill="none" opacity=".5"/>
+<g font-size="13" font-weight="700" fill="#023e5a" text-anchor="middle"><text x="140" y="90">Pococí</text><text x="140" y="108" font-size="12" font-weight="600">12</text><text x="275" y="78">Guácimo</text><text x="275" y="96" font-size="12" font-weight="600">8</text><text x="390" y="88" fill="#fff">Matina</text><text x="390" y="106" font-size="12" font-weight="600" fill="#fff">21</text><text x="510" y="135" fill="#fff">Limón</text><text x="510" y="153" font-size="12" font-weight="600" fill="#fff">58</text><text x="335" y="172" fill="#fff">Siquirres</text><text x="335" y="190" font-size="12" font-weight="600" fill="#fff">31</text><text x="495" y="238">Talamanca</text><text x="495" y="256" font-size="12" font-weight="600">12</text></g>
+<text x="612" y="40" font-size="12" fill="#667085" text-anchor="end">Mar Caribe</text></svg>
+<div class="lg"><span><i style="background:#cdeaf6"></i>menos</span><span><i style="background:#4fb3e0"></i></span><span><i style="background:#0077b6"></i>más demanda</span><span style="margin-left:auto">Piloto: Limón + Siquirres</span></div></div>
+<div class="card s5"><h4><svg class="i" style="color:var(--az)"><use href="#i-chart"/></svg>Trabajos pedidos vs cursos abiertos</h4><p class="d">Cupos por área</p><div id="bars"></div>
+<div class="lg"><span><i style="background:var(--az)"></i>Trabajos comprometidos</span><span><i style="background:var(--vd)"></i>Cupos de curso</span></div></div>
+</div>
+<div class="dgrid" id="d2" style="margin-top:18px">
+<div class="card s6"><h4><svg class="i" style="color:var(--am)"><use href="#i-alert"/></svg>Brechas de habilidades</h4><p class="d">Lo que piden las empresas y aún no se enseña lo suficiente</p><div id="gaps"></div></div>
+<div class="card s6"><h4><svg class="i" style="color:var(--vd)"><use href="#i-trend"/></svg>Sectores que crecen</h4><p class="d">Crecimiento proyectado de demanda, 12 meses (ejemplo)</p><div id="grow"></div></div>
+</div>
+<div class="card" id="d3" style="margin-top:18px"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h4 style="font-size:18px"><svg class="i" style="color:var(--vd)"><use href="#i-traffic"/></svg>Semáforo público de cumplimiento</h4><span class="tag">Público · sin datos personales</span></div>
+<div class="ver" style="margin-top:12px"><svg class="i" style="font-size:18px"><use href="#i-shield"/></svg><b>Verificado con planilla CCSS</b> · Verificador independiente: <b>Universidad pública (convenio por definir)</b> · Corte mensual</div>
+<table><tr><th>Empresa</th><th>Sector</th><th>Estado</th><th>Contratados / comprometidos</th><th>Siguen a 6 meses</th><th>Siguen a 12 meses</th></tr><tbody id="sem"></tbody></table></div>
+<div class="dgrid" id="d4" style="margin-top:18px">
+<div class="card s7"><h4><svg class="i" style="color:var(--az)"><use href="#i-coin"/></svg>Pago por resultados al INA / CTP</h4><p class="d">El pago del curso se libera por tramos según resultados verificados</p>
+<div class="flow"><div><b>40%</b>Al abrir el curso con trabajos firmados</div><div><b>30%</b>Usuario contratado</div><div><b>15%</b>Sigue a 6 meses</div><div><b>15%</b>Sigue a 12 meses</div></div>
+<p style="font-size:13px;color:var(--mu);margin:12px 0 0">Fondos existentes: becas Empléate (MTSS), presupuesto INA, canon JAPDEVA. Porcentajes ilustrativos.</p></div>
+<div class="card s5"><h4><svg class="i" style="color:var(--rj)"><use href="#i-alert"/></svg>¿Qué pasa si una empresa no cumple?</h4><p class="d">Escalera de consecuencias</p><div class="esc">
+<div><span class="st y"><i></i>1</span>Aviso y plan de mejora a 60 días</div><div><span class="st y"><i></i>2</span>Aparece en amarillo en el semáforo público</div><div><span class="st r"><i></i>3</span>En rojo: pierde prioridad en nuevos cursos y becas</div><div><span class="st r"><i></i>4</span>Sus cupos se reasignan a otra empresa del pacto</div></div></div></div>
+</section>
+
+<!-- ========== EMPRESA ========== -->
+<section class="view" id="v2"><div class="ewrap">
+<div><div class="card" style="padding:16px;margin-bottom:12px"><div style="display:flex;gap:10px;align-items:center"><div class="av" style="background:var(--az)">LC</div><div><b style="font-size:14px">Logística Caribe Sur</b><div style="font-size:12px;color:var(--mu)">Empresa ficticia · Limón</div></div></div><div style="margin-top:12px"><span class="st g"><i></i>Cumple</span></div></div>
+<div class="enav"><button class="on" onclick="E(0)"><svg class="i"><use href="#i-plus"/></svg>Registrar puestos</button><button onclick="E(1)"><svg class="i"><use href="#i-pen"/></svg>Firmar compromiso</button><button onclick="E(2)"><svg class="i"><use href="#i-users"/></svg>Candidatos</button><button onclick="E(3)"><svg class="i"><use href="#i-check"/></svg>Confirmar contratación</button></div></div>
+<div>
+<div class="est on card"><h2 style="margin:0 0 4px;letter-spacing:-.5px">Registrar puestos</h2><p style="color:var(--mu);margin:0 0 20px">Diga qué necesita. El curso solo abre cuando hay trabajos firmados.</p>
+<div class="form"><div><label>Puesto</label><div class="inp">Operario de patio portuario<svg class="i"><use href="#i-chev"/></svg></div></div><div><label>¿Cuántas personas va a contratar?</label><div class="inp"><b>12</b><span style="color:var(--mu)">personas</span></div></div>
+<div><label>Habilidades clave</label><div class="inp" style="gap:6px;justify-content:flex-start;flex-wrap:wrap"><span class="tag">Montacargas</span><span class="tag">Seguridad</span><span class="tag">Inglés básico</span></div></div><div><label>Fecha de ingreso</label><div class="inp">Marzo 2027<svg class="i"><use href="#i-cal"/></svg></div></div>
+<div><label>Salario base</label><div class="inp">₡ 420 000 / mes</div></div><div><label>Cantón</label><div class="inp">Limón<svg class="i"><use href="#i-pin"/></svg></div></div></div>
+<div style="display:flex;gap:10px;margin-top:22px"><button class="btn" onclick="E(1)">Continuar<svg class="i"><use href="#i-arr"/></svg></button><button class="btn o">Agregar otro puesto</button></div></div>
+<div class="est card"><h2 style="margin:0 0 4px;letter-spacing:-.5px">Firmar compromiso</h2><p style="color:var(--mu);margin:0 0 18px">Convenio del pacto territorial Limón–Siquirres, 4 años.</p>
+<div class="dgrid"><div class="s7" style="background:#f5f8fb;border-radius:16px;padding:18px;font-size:14px;line-height:1.7">
+<b>Logística Caribe Sur se compromete a:</b><br>✓ Contratar <b>12</b> egresados del curso de logística portuaria<br>✓ Entrevistar primero a todos los egresados<br>✓ Recibir 4 practicantes de educación dual<br>✓ Permitir verificación de retención con planilla CCSS (6 y 12 meses)<br><b style="display:block;margin-top:8px">A cambio recibe:</b>Personal formado a la medida · prioridad en cursos · reconocimiento público en el semáforo</div>
+<div class="s5"><label style="font-size:13px;font-weight:600;color:var(--mu)">Firma del representante</label><div class="sig" style="margin:8px 0 14px">M. Alvarado</div><div style="font-size:13px;color:var(--mu);margin-bottom:14px">Testigos: Municipalidad de Limón · INA</div><button class="btn g" style="width:100%;justify-content:center" onclick="E(2)"><svg class="i"><use href="#i-pen"/></svg>Firmar compromiso</button></div></div></div>
+<div class="est card"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><h2 style="margin:0 0 4px;letter-spacing:-.5px">Candidatos</h2><p style="color:var(--mu);margin:0">Egresados del curso de logística portuaria · INA Limón</p></div><span class="pill">10 de 12 trabajos ya contratados</span></div>
+<div id="cands" style="margin-top:10px"></div></div>
+<div class="est card"><h2 style="margin:0 0 16px;letter-spacing:-.5px">Confirmar contratación</h2>
+<div class="ok"><div class="c"><svg class="i"><use href="#i-check"/></svg></div><div><b style="font-size:18px">Daniela M. contratada</b><div style="color:var(--mu);font-size:14px">Operario de patio · ingreso 3 mar 2027</div></div></div>
+<div class="dgrid" style="margin-top:18px"><div class="s6"><h4 style="margin:0 0 10px">Su compromiso</h4><div class="hb" style="grid-template-columns:110px 1fr 50px"><span>Contratados</span><div class="t"><i style="width:83%;background:var(--vd)"></i></div><b>10/12</b></div><div class="hb" style="grid-template-columns:110px 1fr 50px"><span>Practicantes</span><div class="t"><i style="width:75%;background:var(--az)"></i></div><b>3/4</b></div></div>
+<div class="s6"><h4 style="margin:0 0 10px">Lo que sigue</h4><div class="esc"><div><svg class="i" style="color:var(--az)"><use href="#i-shield"/></svg>La universidad verifica con planilla CCSS</div><div><svg class="i" style="color:var(--az)"><use href="#i-cal"/></svg>Revisión de permanencia: sept 2027 y mar 2028</div><div><svg class="i" style="color:var(--vd)"><use href="#i-traffic"/></svg>Su empresa sigue en verde en el semáforo</div></div></div></div></div>
+</div></div></section>
+<div class="foot">Prototipo ilustrativo · Plaza Primero · UINNOVA Reto 2 · Todos los nombres de empresas y personas son ficticios</div>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="i-hand" viewBox="0 0 24 24"><path d="M7 11l3-3 3 3 4-4 3 3-7 7z"/><path d="M4 14l3 3"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c.8-3.5 3.5-5 7-5s6.2 1.5 7 5"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.5 0 4.3 1.3 5 4"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+<symbol id="i-build" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M10 21v-4h4v4"/></symbol>
+<symbol id="i-vol" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 010 6M19 6a8 8 0 010 12"/></symbol>
+<symbol id="i-arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+<symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.5-1.5 1.6-2 3-2s2.5.5 3 2M15 10h3M15 14h3"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+<symbol id="i-ship" viewBox="0 0 24 24"><path d="M3 15l2 5h14l2-5H3zM6 15V9h12v6M9 9V5h6v4M2 21c2 0 2-1 4-1s2 1 4 1"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-11.5 7.2L4 20l1-4.5A8 8 0 1121 12z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></symbol>
+<symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .8-3 2s1.3 1.7 3 2 3 .8 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6v12"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></symbol>
+<symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></symbol>
+<symbol id="i-brief" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+<symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 13v1M15 13v1"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+<symbol id="i-wa" viewBox="0 0 24 24"><path d="M3 21l1.7-4.6A9 9 0 113 21z"/><path d="M9 8c0 4 3 7 7 7l1-2-2-1-1 1c-1.5-.5-2.5-1.5-3-3l1-1-1-2z"/></symbol>
+<symbol id="i-sig" viewBox="0 0 24 24"><path d="M4 20v-3M9 20v-6M14 20V10M19 20V6"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 013 3v13a2 2 0 00-2-2H4zM20 4h-6a3 3 0 00-3 3"/><path d="M20 4v14h-7"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v4M12 17.5v.5"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></symbol>
+<symbol id="i-traffic" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"/><circle cx="12" cy="7" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="17" r="1.5"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></symbol>
+</defs></svg>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+function P(i){$$('.view').forEach((v,j)=>v.classList.toggle('on',i==j));$$('.seg button').forEach((b,j)=>b.classList.toggle('on',i==j));scrollTo(0,0)}
+const names=['Bienvenida','Registro','Trabajos seguros','Detalle del curso','Mi progreso','Certificado','¿Sigue trabajando?','Ayuda por voz'];
+$('#usteps').innerHTML=names.map((n,i)=>`<button onclick="U(${i})"><span>${i+1}</span>${n}</button>`).join('');
+function U(i){$$('.ust').forEach((s,j)=>s.classList.toggle('on',i==j));$$('#usteps button').forEach((b,j)=>b.classList.toggle('on',i==j))}U(0);
+function E(i){$$('.est').forEach((s,j)=>s.classList.toggle('on',i==j));$$('.enav button').forEach((b,j)=>b.classList.toggle('on',i==j))}
+function say(b){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(b.closest('.ust').innerText.replace(/Escuchar/g,''));u.lang='es-CR';u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+$('#wv').innerHTML=[6,12,18,9,15,20,11,7,14,18,10,6,12,16,8].map(h=>`<i style="height:${h}px"></i>`).join('');
+const A=[['Logística portuaria',58,30],['Mantenimiento eléctrico',34,20],['Turismo e inglés',26,25],['Agroexportación',16,15],['Refrigeración',8,10]];
+$('#bars').innerHTML=A.map(a=>`<div style="margin:12px 0"><div style="font-size:13px;font-weight:600;display:flex;justify-content:space-between"><span>${a[0]}</span><span style="color:var(--mu)">${a[1]} / ${a[2]}</span></div><div class="t" style="height:9px;background:#eef2f6;border-radius:5px;margin-top:6px;overflow:hidden"><i style="display:block;height:100%;width:${a[1]/60*100}%;background:var(--az);border-radius:5px"></i></div><div style="height:9px;background:#eef2f6;border-radius:5px;margin-top:4px;overflow:hidden"><i style="display:block;height:100%;width:${a[2]/60*100}%;background:var(--vd);border-radius:5px"></i></div></div>`).join('');
+const G=[['Operación de montacargas',72],['Inglés atención al cliente',58],['Electricidad industrial',47],['Cadena de frío',35],['Ofimática y bodega',18]];
+$('#gaps').innerHTML=G.map(g=>`<div class="hb"><span>${g[0]}</span><div class="t"><i style="width:${g[1]}%;background:${g[1]>50?'var(--rj)':g[1]>30?'var(--am)':'var(--vd)'}"></i></div><b style="text-align:right">${g[1]}%</b></div>`).join('')+'<div class="lg"><span>% de puestos sin personas formadas</span></div>';
+const S=[['Logística portuaria',24],['Mantenimiento',18],['Turismo',15],['Agroexportación',9]];
+$('#grow').innerHTML=S.map(g=>`<div class="hb"><span>${g[0]}</span><div class="t"><i style="width:${g[1]*3.5}%;background:var(--vd)"></i></div><b style="text-align:right;color:#13804c">+${g[1]}%</b></div>`).join('')+'<div class="lg"><span>Fuente sugerida: registros del pacto + MTSS (ilustrativo)</span></div>';
+const C=[['Logística Caribe Sur','Portuario','g','Cumple',10,12,92,83],['Frío Atlántico','Cadena de frío','g','Cumple',8,8,88,80],['Agroexport Pacuare','Agroexportación','y','En riesgo',6,10,83,null],['Mantenimientos del Caribe','Mantenimiento','g','Cumple',9,10,90,null],['Hotel Brisa Verde','Turismo','r','No cumple',2,8,50,null]];
+const m=(v,c)=>v==null?'<span style="color:var(--mu)">Pendiente</span>':`<span class="mini"><i style="width:${v}%;background:${c}"></i></span><b>${v}%</b>`;
+$('#sem').innerHTML=C.map(c=>`<tr><td><b>${c[0]}</b></td><td style="color:var(--mu)">${c[1]}</td><td><span class="st ${c[2]}"><i></i>${c[3]}</span></td><td><span class="mini"><i style="width:${c[4]/c[5]*100}%;background:var(--az)"></i></span><b>${c[4]} / ${c[5]}</b></td><td>${m(c[6],'var(--vd)')}</td><td>${m(c[7],'var(--vd)')}</td></tr>`).join('');
+const K=[['Daniela M.','DM','#0077b6','Asistencia 100% · Montacargas ✓','Contratada'],['José R.','JR','#2bb673','Asistencia 95% · Inglés básico ✓','Entrevista lun 9am'],['Keylor A.','KA','#f59e0b','Asistencia 90% · Seguridad ✓','Entrevista lun 10am'],['María F.','MF','#7c5cff','Asistencia 98% · Montacargas ✓','Por entrevistar']];
+$('#cands').innerHTML=K.map(k=>`<div class="cand"><div class="av" style="background:${k[2]}">${k[1]}</div><div><b>${k[0]}</b><div style="font-size:13px;color:var(--mu)">${k[3]}</div></div><span class="st ${k[4]=='Contratada'?'g':'y'}"><i></i>${k[4]}</span><button class="btn ${k[4]=='Contratada'?'o':''}" onclick="E(3)">${k[4]=='Contratada'?'Ver':'Contratar'}</button></div>`).join('')+'<p style="font-size:12px;color:var(--mu);margin-top:12px">La empresa ve solo datos necesarios para contratar. Nombres ficticios.</p>';
+</script></body></html>
